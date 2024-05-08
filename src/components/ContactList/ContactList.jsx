@@ -4,13 +4,24 @@ import Contact from "../Contact/Contact";
 /* import Contact from "../Contact/Contact"; */
 
 export default function ContactList() {
-  const items = useSelector((state) => state.contacts.items);
-  console.log(items);
+  const contacts = useSelector((state) => state.contacts.items);
+  const filter = useSelector((state) => state.filters.name);
+  const filteredContacts =
+    contacts?.filter(
+      (contact) =>
+        contact.name &&
+        contact.name.toLowerCase().includes(filter.toLowerCase())
+    ) || [];
+
   return (
-    <ul className={css.list}>
-      {items.map((contact) => (
-        <Contact key={contact.id} item={contact} />
-      ))}
-    </ul>
+    <>
+      {filteredContacts.length > 0 && (
+        <ul className={css.list}>
+          {filteredContacts.map((contact) => (
+            <Contact key={contact.id} item={contact} />
+          ))}
+        </ul>
+      )}
+    </>
   );
 }

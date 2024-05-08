@@ -13,7 +13,10 @@ export default function ContactForm() {
       .required("Required")
       .min(3, "Too Short!")
       .max(50, "Too Long!"),
-    number: yup.string().required("Required"),
+    number: yup
+      .string()
+      .matches(/^\d{3}-\d{2}-\d{2}$/, "Invalid phone number format")
+      .required("Required"),
   });
 
   return (
@@ -52,7 +55,7 @@ export default function ContactForm() {
                 name="number"
                 className={css.input}
                 id="user_number"
-                placeholder="380-12-34-56-789"
+                placeholder="123-45-67"
               />
               <ErrorMessage
                 name="number"
